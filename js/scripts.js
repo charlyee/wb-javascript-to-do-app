@@ -18,6 +18,7 @@ form.addEventListener( 'submit', function ( event ) {
         <li>
             <input type="checkbox">
             ` + newTask.value + `
+            <button>Delete</button>
         </li>
     `;
 
@@ -26,13 +27,33 @@ form.addEventListener( 'submit', function ( event ) {
     // Loop through all the checkboxes - make sure they ALL have the event each time we submit!
     for ( var i = 0; i < newCheckboxes.length; i++ ) {
         var newCheckbox = newCheckboxes[i];
+        // Grab the associated LI.
+        var li = newCheckbox.parentNode;
+        // Grab our button.
+        var button = li.children[1]; // Get second child element (button!)
+
+        // Listen for clicks on our delete button.
+        button.addEventListener( 'click', function (event) {
+            // Check if the current list item is in ACTIVE or if it is in the COMPLETED list.
+            var isInActiveList = false;
+            for ( var i = 0; i < activeList.children.length; i++ ) {
+                if ( li === activeList.children[i] ) {
+                    isInActiveList = true; // It is in the active list!
+                }
+            }
+
+            // Remove the child based on list.
+            if ( isInActiveList ) {
+                activeList.removeChild( li );
+            } else {
+                completedList.removeChild( li );
+            }
+        } );
+
         // Listen for a click on this checkbox!
         newCheckbox.addEventListener( 'click', function ( event ) {
-            // Grab the associated LI.
-            var li = this.parentNode;
-
             // Delete THIS clicked checkbox.
-            li.removeChild( this );
+            li.removeChild( newCheckbox );
 
             // Move the LI to our completed UL.
             completedList.appendChild( li );
