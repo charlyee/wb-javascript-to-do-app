@@ -20,4 +20,19 @@ form.addEventListener( 'submit', function ( event ) {
             ` + newTask.value + `
         </li>
     `;
+
+    // Grab our brand new checkbox! (The last LI will always be the newest one!)
+    var newCheckbox = document.querySelector( 'ul li:last-child [type="checkbox"]' );
+
+    // Listen for a click on this checkbox!
+    newCheckbox.addEventListener( 'click', function ( event ) {
+        // Grab the associated LI.
+        var li = this.parentNode;
+
+        // Delete THIS clicked checkbox.
+        li.removeChild( this );
+
+        // Move the LI to our completed UL.
+        completedList.appendChild( li );
+    } );
 } );
