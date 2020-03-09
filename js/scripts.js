@@ -22,17 +22,20 @@ form.addEventListener( 'submit', function ( event ) {
     `;
 
     // Grab our brand new checkbox! (The last LI will always be the newest one!)
-    var newCheckbox = document.querySelector( 'ul li:last-child [type="checkbox"]' );
+    var newCheckboxes = document.querySelectorAll( 'ul [type="checkbox"]' );
+    // Loop through all the checkboxes - make sure they ALL have the event each time we submit!
+    for ( var i = 0; i < newCheckboxes.length; i++ ) {
+        var newCheckbox = newCheckboxes[i];
+        // Listen for a click on this checkbox!
+        newCheckbox.addEventListener( 'click', function ( event ) {
+            // Grab the associated LI.
+            var li = this.parentNode;
 
-    // Listen for a click on this checkbox!
-    newCheckbox.addEventListener( 'click', function ( event ) {
-        // Grab the associated LI.
-        var li = this.parentNode;
+            // Delete THIS clicked checkbox.
+            li.removeChild( this );
 
-        // Delete THIS clicked checkbox.
-        li.removeChild( this );
-
-        // Move the LI to our completed UL.
-        completedList.appendChild( li );
-    } );
+            // Move the LI to our completed UL.
+            completedList.appendChild( li );
+        } );
+    }
 } );
