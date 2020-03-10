@@ -13,11 +13,28 @@ var form = document.querySelector( 'form' );
 form.addEventListener( 'submit', function ( event ) {
     // Prevent a page-refresh from a REAL form submission.
     event.preventDefault();
+
+    // New date object instance of class: Date.
+    var startDate = new Date();
+    var startDateString =
+      startDate.getDate() +
+      '-' +
+      ( Number(startDate.getMonth()) + 1 ) + // Month starts at zero, yuck! Lets add one!
+      '-' +
+      startDate.getFullYear() +
+      ' ' +
+      startDate.getHours() +
+      ':' +
+      startDate.getMinutes() +
+      ':' +
+      startDate.getSeconds();
+
     // Let's add the list item into our UL.
     activeList.innerHTML += `
         <li>
             <input type="checkbox">
             ` + newTask.value + `
+            <time><strong>Start:</strong> ` + startDateString + `</time>
             <button>Delete</button>
         </li>
     `;
@@ -30,7 +47,7 @@ form.addEventListener( 'submit', function ( event ) {
         // Grab the associated LI.
         var li = newCheckbox.parentNode;
         // Grab our button.
-        var button = li.children[1]; // Get second child element (button!)
+        var button = li.children[2]; // Get second child element (button!)
 
         // Listen for clicks on our delete button.
         button.addEventListener( 'click', function (event) {
@@ -55,8 +72,28 @@ form.addEventListener( 'submit', function ( event ) {
             // Delete THIS clicked checkbox.
             li.removeChild( newCheckbox );
 
+            li.innerHTML += ``;
+
             // Move the LI to our completed UL.
             completedList.appendChild( li );
         } );
     }
 } );
+
+function formatDateString () {
+    // New date object instance of class: Date.
+    var date = new Date();
+    var dateString =
+      date.getDate() +
+      '-' +
+      ( Number(date.getMonth()) + 1 ) + // Month starts at zero, yuck! Lets add one!
+      '-' +
+      date.getFullYear() +
+      ' ' +
+      date.getHours() +
+      ':' +
+      date.getMinutes() +
+      ':' +
+      date.getSeconds();
+    return date;
+}
