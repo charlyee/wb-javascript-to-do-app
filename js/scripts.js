@@ -15,19 +15,7 @@ form.addEventListener( 'submit', function ( event ) {
     event.preventDefault();
 
     // New date object instance of class: Date.
-    var startDate = new Date();
-    var startDateString =
-      startDate.getDate() +
-      '-' +
-      ( Number(startDate.getMonth()) + 1 ) + // Month starts at zero, yuck! Lets add one!
-      '-' +
-      startDate.getFullYear() +
-      ' ' +
-      startDate.getHours() +
-      ':' +
-      startDate.getMinutes() +
-      ':' +
-      startDate.getSeconds();
+    var startDateString = formatDateString();
 
     // Let's add the list item into our UL.
     activeList.innerHTML += `
@@ -72,7 +60,12 @@ form.addEventListener( 'submit', function ( event ) {
             // Delete THIS clicked checkbox.
             li.removeChild( newCheckbox );
 
-            li.innerHTML += ``;
+            // Add in our end time string!
+            var endTime = document.createElement( 'TIME' );
+            endTime.innerHTML += '<strong>End:</strong> ' + formatDateString();
+
+            // Add time to the li.
+            li.appendChild( endTime );
 
             // Move the LI to our completed UL.
             completedList.appendChild( li );
@@ -86,7 +79,7 @@ function formatDateString () {
     var dateString =
       date.getDate() +
       '-' +
-      ( Number(date.getMonth()) + 1 ) + // Month starts at zero, yuck! Lets add one!
+      ( Number( date.getMonth() ) + 1 ) + // Month starts at zero, yuck! Lets add one!
       '-' +
       date.getFullYear() +
       ' ' +
@@ -95,5 +88,5 @@ function formatDateString () {
       date.getMinutes() +
       ':' +
       date.getSeconds();
-    return date;
+    return dateString;
 }
